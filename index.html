@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Corey's Star Wars Game</title>
+
+  <!-- Added link to the jQuery Library -->
+  <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
+  <!-- Added a link to Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="http://bootswatch.com/cyborg/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Kelly+Slab" rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="jumbotron">
+    <h1 class="text-center">Spaceballs RPG</h1>
+  </div>
+
+  <div class="container">
+    
+    <div id="charactersDiv">
+       <h1>SELECT A CHARACTER</h1>
+    </div>
+
+    <div id="playerDiv">
+        <h2 id="playerHeader"></h2>
+    </div>
+
+    <div id="enemiesDiv">
+      <h2 id="enemiesHeader"></h2>
+    </div>
+
+    <div id="buttonDiv">
+       <h3 id="attackHeader"></h3>
+       <button class="btn btn-danger attack">ATTACK!!</button>
+    </div>   
+
+    <div id="defenderDiv"></div>
+
+    <div id="resultsDiv">RESULTS</div>
+
+
+  </div>
+
+  <script src='assets/javascript/game.js'></script>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+body {
+
+}
+
+h1, h2 {
+	font-family: 'Kelly Slab', cursive;
+}
+
+div {
+	outline: 2px groove #D9D9D9;
+}
+
+.imageClass {
+	max-width: 275px;
+	float: left;
+	outline: 1px outset #29403D;
+	margin: 10px 5px 10px 5px;
+}
+
+#charactersDiv {
+	text-align: center;
+}
+
+#playerDiv {
+	clear: left;
+	margin-top: 20px;
+	background-color: red;
+}
+#enemiesDiv {
+	clear: left;
+}
+.select {
+
+}
+#buttonDiv {
+	clear: left;
+
+}
+
+#defenderDiv {
+	clear: left;
+}
