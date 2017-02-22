@@ -4,6 +4,7 @@
 
       // Make our variables global to the runtime of our application
       var imageChar, imagePlayer, imageEnemy, imageDefender, playerIndex, enemyIndex, defenderIndex;
+      var player, defender;
       var enemySelect;
       var enemies = [];
       //make character objects
@@ -17,8 +18,8 @@
 
       // Use a function to initialize our game or clear for a new round.
       // This way when the user hits clear, we can guarantee a reset of the app.
-      function initializeRound() {
-      }
+          function initializeRound() {
+          }
 
 
       //dynamically build the characters into the charactersDiv
@@ -52,7 +53,7 @@
 
             $('#playerDiv').append(imagePlayer);
 
-            $('#attackHeader').append('Choose your enemy!!!')
+            $('#attackHeader').append('Choose your enemy!!!');
             $('#enemiesHeader').append('Enemies Available to Attack');
 
 
@@ -70,14 +71,12 @@
                 }
 
 
-        console.log(playerIndex);
         //this will move the selected enemy to the defender area
 
         //this will move the selected enemy to the defender area
         //below: build listening events for clicks on the 'enemySelect' class
 
         $('.enemySelect').on('click', function(){
-          console.log('cool');
         defenderIndex = parseInt($(this).attr('enemyIndex'));
         console.log('defenderIndex ' + defenderIndex);
         imageDefender = $('<img>');
@@ -85,9 +84,42 @@
         imageDefender.attr('src', characters[defenderIndex].imageSrc);
 
         $('#defenderDiv').append(imageDefender);
+        $('#attackHeader').html('Hit the Attack Button!!!');
 
 
-        })
+       
+        //make a loop below to replace the enemiesDiv with the remaining characters
+                $('#enemiesDiv').empty();
+
+                for (i = 0; i < characters.length; i++) {
+                  if (i !== defenderIndex && i !== playerIndex) {    //go through the image builder for the 'other' index numbers
+
+                    imageEnemy = $('<img>');
+                    imageEnemy.addClass('imageClass enemySelect');
+                    imageEnemy.attr('src', characters[i].imageSrc);
+                    imageEnemy.attr('enemyIndex', i);
+
+                    $('#enemiesDiv').append(imageEnemy);
+                  } 
+                }
+
+       //below will be the section for events happening after the attack button is pushed
+               $('.attack').on('click', function() {
+                    player = characters[playerIndex];
+                    defender = characters[defenderIndex];
+                    console.log(player);
+                    console.log(defender);
+
+
+
+
+
+
+
+
+
+               })
+
 
       // Add an on click listener to all elements that have the class "reset"
     //  $(".reset").on("click", function() {
@@ -99,9 +131,9 @@
 
       // Call initializeCalculater so we can set the state of our app
      // initializeRound();
+        })
 
-
-             });  
+      });  
 
 
     }) 

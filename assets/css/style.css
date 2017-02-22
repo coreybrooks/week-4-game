@@ -29,6 +29,11 @@ div {
 #enemiesDiv {
 	clear: left;
 }
+
+#resultsDiv{
+    clear: left;
+}
+
 .select {
 
 }
