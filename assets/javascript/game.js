@@ -68,13 +68,13 @@
                    var playerDamage = player.playerDamage;
                    var playerCD = player.playerCounterDamage;
 
+            $('#attackHeader').html('Choose your enemy!!!');
 
 
             function playGame() {
 
             $('#playerDiv').html(imagePlayer);
             $('#playerHeader').html('Your Character');
-            $('#attackHeader').html('Choose your enemy!!!');
             $('#enemiesHeader').html('Enemies Available to Attack');
 
 
@@ -132,7 +132,7 @@
                    var defenderDamage = defender.playerDamage;
                    var defenderCD = defender.playerCounterDamage;
 
-                    $('#playerHp').html(playerHp);
+                    $('#playerHeader').html(playerHp);
                     $('#defenderHp').html(defenderHp);
 
 
