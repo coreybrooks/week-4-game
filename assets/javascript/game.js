@@ -1,7 +1,5 @@
 
 
-     $(document).ready( function () { 
-
       // Make our variables global to the runtime of our application
       var imageChar, imagePlayer, imageEnemy, imageDefender, playerIndex, enemyIndex, defenderIndex;
       var player, defender;
@@ -18,38 +16,54 @@
           {name: 'Barf', imageSrc: 'assets/images/barf.jpg', playerHp: 100, playerDamage: 6, playerCounterDamage: 5}
         ];
 
+        buildCharacters();
+
 
       // Use a function to initialize our game or clear for a new round.
       // This way when the user hits clear, we can guarantee a reset of the app.
           function clearPlayArea() {
             $('#playerDiv').empty();
+            $('#enemiesDiv').empty();
+            $('#defenderDiv').empty();
+            $('#buttonDiv').empty();
+            $('#playerHeader').empty();
+            $('#defenderHeader').empty();
+            $('#attackHeader').empty();
+
             selectedCharacters = [];
             player = '';
             defender = '';
             playerDamage = '';
-            gameOver = false;
-                      }
 
-
-
+            buildCharacters();
+          }
 
       //dynamically build the characters into the charactersDiv
+      function buildCharacters() {
+
+        $('#charactersHeader').html('CHOOSE A CHARACTER');
+
+        console.log('buildCharacters working');
+
         for (i = 0; i < characters.length; i++) {
         char = characters[i];
         imageChar = $('<img>');
-        imageChar.addClass('imageClass select'); //assign classes and attributes to the images
+        imageChar.addClass('imageClass playerClass select'); //assign classes and attributes to the images
         imageChar.attr('src', char.imageSrc);
         imageChar.attr('charIndex', i); //assign a character index number (of characters array) to help
-       
-        $('#charactersDiv').append(imageChar);                      //move the images to the proper div
+                                        //move the images to the proper div
+        $('#charactersDiv').append(imageChar);                      
         }
+
+      }
        //below: build listening events for clicks on the 'select' class
        //this will run the first time an image is clicked, this will select a player, send the player
        //info to the playerDiv, then send the rest of the characters to the enemiesDiv
 
-        $('.select').on('click', function() { //
 
+        $(document).on('click', '.select', function() { 
           $('#charactersDiv').empty(); //empty the characters from the charactersDiv
+          $('#charactersHeader').empty();
 
             playerIndex = parseInt($(this).attr('charIndex')); //identifies the player index as the charIndex attr of
                                                                //'this' image converted to integer          
@@ -59,57 +73,27 @@
             console.log('selectedCharacters ' + selectedCharacters);
 
             imagePlayer = $('<img>');                        
-            imagePlayer.addClass('imageClass');
+            imagePlayer.addClass('playerClass');
             imagePlayer.attr('src', $(this).attr('src'));
             imagePlayer.attr('playerIndex', playerIndex);
 
-                   var player = characters[playerIndex];
-                   var playerHp = player.playerHp;
-                   var playerDamage = player.playerDamage;
-                   var playerCD = player.playerCounterDamage;
+                   player = characters[playerIndex];
+                   playerHp = player.playerHp;
+                   playerDamage = player.playerDamage;
+                   playerCD = player.playerCounterDamage;
 
+            $('#playerDiv').append(imagePlayer);
+            $('#playerHeader').html('HEALTH  ' + playerHp);
             $('#attackHeader').html('Choose your enemy!!!');
 
-
-            function playGame() {
-
-            $('#playerDiv').html(imagePlayer);
-            $('#playerHeader').html('Your Character');
-            $('#enemiesHeader').html('Enemies Available to Attack');
+             buildEnemies();
+        })
 
 
-
-                for (i = 0; i < characters.length; i++) {  //build enemy characters
-                  if (selectedCharacters.indexOf(i)<0) {    //go through the image builder for the 'other' index numbers
-
-                  imageEnemy = $('<img>');
-                  imageEnemy.addClass('imageClass enemySelect');
-                  imageEnemy.attr('src', characters[i].imageSrc);
-                  imageEnemy.attr('enemyIndex', i);
-
-                 $('#enemiesDiv').append(imageEnemy);
-                  } 
-                }
-
-
-        //this will move the selected enemy to the defender area
-        //below: build listening events for clicks on the 'enemySelect' class     
-                     
-        $('.enemySelect').on('click', function(){ //          
-        defenderIndex = parseInt($(this).attr('enemyIndex'));
-        selectedCharacters.push(defenderIndex);
-        console.log('defenderIndex ' + defenderIndex);
-        imageDefender = $('<img>');
-        imageDefender.addClass('imageClass');
-        imageDefender.attr('src', characters[defenderIndex].imageSrc);
-
-        $('#defenderDiv').append(imageDefender);
-        $('#attackHeader').html('Hit the Attack Button!!!');
-
-
-       
-        //make a loop below to replace the enemiesDiv with the remaining characters
+            function buildEnemies() {
+             //make a loop below to replace the enemiesDiv with the remaining characters
                 $('#enemiesDiv').empty();
+                console.log('buildEnemies working');
 
                 for (i = 0; i < characters.length; i++) {
                   //run the below condition if the character index number,'i', is not in the selectedCharacters array
@@ -123,38 +107,54 @@
                     $('#enemiesDiv').append(imageEnemy);
                   } 
                 }
-
-       //below will be the section for events happening after the attack button is pushed
-
-
-                   var defender = characters[defenderIndex];
-                   var defenderHp = defender.playerHp;
-                   var defenderDamage = defender.playerDamage;
-                   var defenderCD = defender.playerCounterDamage;
-
-                    $('#playerHeader').html(playerHp);
-                    $('#defenderHp').html(defenderHp);
+            }
 
 
+        //this will move the selected enemy to the defender area
+        //below: build listening events for clicks on the 'enemySelect' class     
+                     
+        $(document).on('click', '.enemySelect', function(){  
+            console.log('enemySelect clicked'); 
+            defenderIndex = parseInt($(this).attr('enemyIndex'));
+            selectedCharacters.push(defenderIndex);
+            console.log('defenderIndex ' + defenderIndex);
+            console.log('selectedCharacters.length ' + selectedCharacters.length);
+            imageDefender = $('<img>');
+            imageDefender.addClass('defenderClass');
+            imageDefender.attr('src', characters[defenderIndex].imageSrc);
+
+            defender = characters[defenderIndex];
+            defenderHp = defender.playerHp;
+            defenderDamage = defender.playerDamage;
+            defenderCD = defender.playerCounterDamage;
+
+            $('#defenderDiv').append(imageDefender);
+            $('#defenderHeader').html('HEALTH  ' + defenderHp);
+            $('#attackHeader').html('Hit the Attack Button!!!');
+
+            $('#enemiesDiv').empty();
+            buildButtons();
+        }) 
 
 
-               $('.attack').on('click', function() {//
-                //set the fight area variables to avoid changing the character array
+
+
+            $(document).on('click', '.attack', function() {//
 
                     playerHp -= defenderCD;  //player hit by defender
                     defenderHp -= playerDamage;   // defender hit by player
                     playerDamage += characters[playerIndex].playerDamage;  //players damage points increase every attack by 
-                                                                          //characters damage points
+                      console.log('playerDamage ' + playerDamage);                                                    //characters damage points
 
-                    $('#playerHp').html(playerHp);
-                    $('#defenderHp').html(defenderHp);
+                    $('#playerHeader').html('HEALTH  ' + playerHp);
+                    $('#defenderHeader').html('HEALTH  ' + defenderHp);
 
                     if (playerHp <= 0) {
                       $('#attackHeader').html('YOU LOSE!! GAME OVER');
                       losses++;
                       $('#losses').html(losses);
                       console.log('losses ' + losses);
-                      gameOver = true;
+                      resetOnly();
                     }
 
                     else if (defenderHp <= 0) {  //
@@ -162,48 +162,50 @@
                       if (characters.length == selectedCharacters.length) {
                         $('#defenderDiv').empty();
                         $('#attackHeader').html('YOU WIN!! GAME OVER');
+                        $('#defenderHeader').empty();
                         wins++;
                         $('#wins').html(wins);
-                        gameOver = true;
+                       resetOnly();
                       }
 
                       else {
+                      $('#buttonDiv').empty();
                       $('#enemiesDiv').empty();
                       $('#defenderDiv').empty();
-                      $('#attackHeader').html('YOU WIN!! SELECT ANOTHER PLAYER');
-                      playGame();
+                      $('#defenderHeader').empty();
+                      $('#attackHeader').html('YOU WIN!! Choose another enemy');
+                      buildEnemies();
                       }
                     }
-
-                  })
-                 })   
-                                                       }
-    
-
-                                var resetButton = $('<button>');
-                                resetButton.addClass('reset btn btn-primary');
-                                resetButton.text('RESET');
-
-                                if (gameOver = true) {
-                                  $('#attackHeader').html(resetButton);
-                                }
-
-                                $('.reset').on('click', function() {
-                                  console.log('reset is clicking');
-                                  clearPlayArea();
-                                  playGame();
-                                })
-
-
-                                // reset button
-
-                   playGame();
-               })
-                   clearPlayArea();
             })
-
-
     
 
+              function buildButtons(){
 
-                              
+                $('#buttonDiv').empty();
+
+                var attackButton = $('<button>');
+                attackButton.addClass('btn btn-danger attack');
+                attackButton.text('ATTACK');
+
+                var resetButton = $('<button>');
+                resetButton.addClass('reset btn btn-success');
+                resetButton.text('NEW ROUND');
+
+                $('#buttonDiv').append(attackButton);
+                $('#buttonDiv').append(resetButton);                               
+              }
+
+              function resetOnly() {
+                var resetButton = $('<button>');
+                resetButton.addClass('reset btn btn-success');
+                resetButton.text('NEW ROUND');
+                $('#buttonDiv').html(resetButton);
+              } 
+
+            //new round function when reset is clicked
+              $(document).on('click','.reset', function() {
+                console.log('reset is clicking');
+                clearPlayArea();
+              })
+                         

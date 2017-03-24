@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Corey's Star Wars Game</title>
+  <title>Corey's Spaceballs Game</title>
 
   <!-- Added link to the jQuery Library -->
   <script src="https://code.jquery.com/jquery-3.1.1.js"></script>
@@ -21,34 +21,42 @@
     <div>
       <h3>WINS: <span id="wins"></span></h3>
       <h3>LOSSES: <span id="losses"></span></h3>
-      <h4>PlayerHP: <span id="playerHp"></span></h4>
-      <h4>DefenderHP: <span id="defenderHp"></span>
     </div>
   </div>
 
   <div class="container">
     
-    <div id="charactersDiv">
-       <h1>SELECT A CHARACTER</h1>
+    <div>
+      <h1 id="charactersHeader"></h1>
     </div>
 
-    <div id="playerDiv">
-        <h2 id="playerHeader"></h2>
+    <div id="charactersDiv">
+    </div>
+    
+    <div id="playerContainer">
+       <div id="playerDiv">        
+       </div>
+       <h6 id="playerHeader"></h6>
+    </div>
+
+    <div id="attackDiv">
+      <h3 id="attackHeader"></h3>
     </div>
 
     <div id="enemiesDiv">
       <h2 id="enemiesHeader"></h2>
     </div>
 
-    <div id="buttonDiv">
-       <h3 id="attackHeader"></h3>
-       <button class="btn btn-danger attack">ATTACK!!</button>
+    <div id="buttonDiv">       
     </div>   
 
-    <div id="defenderDiv"></div>
+    <div id="defenderContainer">
+      <div id="defenderDiv">
+      </div>
+      <h6 id="defenderHeader"></h6>    
+    <div>
 
     <div id="resultsDiv"></div>
-
 
   </div>
 
